@@ -1,0 +1,9 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<BorlandProject>
+	<Transactions>
+    <Transaction>2017/02/06 09:17:16.600.pas,C:\Users\rodrigorangel\Documents\RAD Studio\Projects\Unit1.pas=C:\Users\rodrigorangel\Desktop\Arquivos\Projetos Delphi\webService_Correios2\uWebService_Correios.pas</Transaction>
+    <Transaction>2017/02/06 09:17:16.600.dfm,C:\Users\rodrigorangel\Documents\RAD Studio\Projects\Unit1.dfm=C:\Users\rodrigorangel\Desktop\Arquivos\Projetos Delphi\webService_Correios2\uWebService_Correios.dfm</Transaction>
+    <Transaction>2017/02/06 09:17:23.384.dproj,C:\Users\rodrigorangel\Documents\RAD Studio\Projects\Project1.dproj=C:\Users\rodrigorangel\Desktop\Arquivos\Projetos Delphi\webService_Correios2\WebService_Correios.dproj</Transaction>
+    <Transaction>2017/02/06 09:28:35.793.pas,C:\Users\rodrigorangel\Desktop\Arquivos\Projetos Delphi\webService_Correios2\cep.pas=C:\Users\rodrigorangel\Desktop\Arquivos\Projetos Delphi\webService_Correios2\CEP.pas</Transaction>
+  </Transactions>
+</BorlandProject>

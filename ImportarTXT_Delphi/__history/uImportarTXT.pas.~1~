@@ -1,0 +1,70 @@
+unit uImportarTXT;
+
+interface
+
+uses
+  Windows, Messages, SysUtils, Variants, Classes, Graphics, Controls, Forms,
+  Dialogs, Grids, DBGrids, StdCtrls, DB, DBClient;
+
+type
+  TForm1 = class(TForm)
+    ClientDataSet1: TClientDataSet;
+    Button1: TButton;
+    DBGrid1: TDBGrid;
+    procedure Button1Click(Sender: TObject);
+  private
+    { Private declarations }
+  public
+    { Public declarations }
+
+
+
+  end;
+
+var
+  Form1: TForm1;
+
+implementation
+
+{$R *.dfm}
+
+var
+
+    Arquivo     : TextFile;
+    Contador, I : Integer;
+    Linha       : String;
+
+function MontaValor : String;
+ var
+ valorMontado : String;
+ begin
+
+  valorMontado := '';
+  Inc(I);
+
+  while Linha[I] >= ' ' do
+   begin
+     if Linha[I] = ';' then
+      Break;
+
+     valorMontado := valorMontado + Linha[I];
+     Inc(I);
+
+   end;
+
+   Result := valorMontado;
+
+ end;
+
+
+procedure TForm1.Button1Click(Sender: TObject);
+begin
+
+
+  AssignFile(Arquivo, 'C:\SQL\ArquivoImportar.txt');
+
+
+
+end;
+
+end.

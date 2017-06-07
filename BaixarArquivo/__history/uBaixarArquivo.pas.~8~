@@ -1,0 +1,115 @@
+unit uBaixarArquivo;
+
+interface
+
+uses
+  Windows, Messages, SysUtils, Variants, Classes, Graphics, Controls, Forms,
+  Dialogs, StdCtrls, Buttons, ComCtrls, IdAntiFreezeBase, IdAntiFreeze,
+  IdBaseComponent, IdComponent, IdTCPConnection, IdTCPClient, IdHTTP;
+
+type
+  TForm1 = class(TForm)
+    IdHTTP1: TIdHTTP;
+    IdAntiFreeze1: TIdAntiFreeze;
+    pb1: TProgressBar;
+    dlgSave1: TSaveDialog;
+    btn1: TBitBtn;
+    Label1: TLabel;
+    edt1: TEdit;
+    Label3: TLabel;
+    btn2: TBitBtn;
+    procedure btn1Click(Sender: TObject);
+    procedure IdHTTP1WorkBegin(ASender: TObject; AWorkMode: TWorkMode;
+      AWorkCountMax: Int64);
+    procedure IdHTTP1Work(ASender: TObject; AWorkMode: TWorkMode;
+      AWorkCount: Int64);
+    procedure IdHTTP1WorkEnd(ASender: TObject; AWorkMode: TWorkMode);
+    procedure btn2Click(Sender: TObject);
+  private
+    { Private declarations }
+  public
+    { Public declarations }
+  end;
+
+var
+  Form1: TForm1;
+
+implementation
+
+{$R *.dfm}
+
+function retornaPorcentagem(valorTotal, valorAtual : Real):String;
+var
+resultado : Real;
+begin
+ resultado := ((valorAtual * 100) / valorTotal);
+ Result := FormatFloat('0%', resultado);
+end;
+
+function retornaKBytes(valorAtual : Real): string;
+var
+resultado : Real;
+begin
+  resultado := ((valorAtual / 1024) / 1024);
+  Result := FormatFloat('0.000 Kbs', resultado);
+
+
+end;
+
+procedure TForm1.btn1Click(Sender: TObject);
+begin
+  IdHTTP1.Disconnect();
+end;
+
+procedure TForm1.btn2Click(Sender: TObject);
+var
+fileDownload : TFileStream;
+begin
+  dlgSave1.Filter := 'Arquivos ' + ExtractFileExt(edt1.Text) + '|*' + ExtractFileExt(edt1.Text);
+  dlgSave1.FileName := 'Arquivo';
+
+  if (dlgSave1.Execute) then
+   begin
+      fileDownload := TFileStream.Create(dlgSave1.FileName + ExtractFileExt(edt1.Text), fmCreate);
+      try
+
+
+        IdHTTP1.Get(edt1.Text, fileDownload);
+
+
+
+      finally
+
+        FreeAndNil(fileDownload);
+
+      end;
+
+
+   end;
+
+end;
+
+procedure TForm1.IdHTTP1Work(ASender: TObject; AWorkMode: TWorkMode;
+  AWorkCount: Int64);
+begin
+    pb1.Position :=  AWorkCount;
+    label1.Caption := 'Baixando... ' + retornaKBytes(AWorkCount);
+    Self.Caption := 'Download em: ' + retornaPorcentagem(pb1.Max, AWorkCount);
+end;
+
+procedure TForm1.IdHTTP1WorkBegin(ASender: TObject; AWorkMode: TWorkMode;
+  AWorkCountMax: Int64);
+begin
+    pb1.Max := AWorkCountMax;
+end;
+
+procedure TForm1.IdHTTP1WorkEnd(ASender: TObject; AWorkMode: TWorkMode);
+begin
+  pb1.Position := 0;
+  self.Caption := 'Finalizado...';
+  Label1.Caption := 'Download Finalizado...';
+ // pb1.Visible := False;
+
+end;
+
+end.

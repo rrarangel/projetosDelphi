@@ -1,0 +1,39 @@
+unit uPrincipal;
+
+interface
+
+uses
+  Windows, Messages, SysUtils, Variants, Classes, Graphics, Controls, Forms,
+  Dialogs, StdCtrls;
+
+type
+  TfPrincipal = class(TForm)
+    btn1: TButton;
+    procedure btn1Click(Sender: TObject);
+  private
+    { Private declarations }
+  public
+    { Public declarations }
+  end;
+
+var
+  fPrincipal: TfPrincipal;
+
+implementation
+
+uses
+  ufilho1;
+
+{$R *.dfm}
+
+procedure TfPrincipal.btn1Click(Sender: TObject);
+begin
+  try
+     fFilho1 := TfFilho1.Create(Application);
+     fFilho1.Show;
+  finally
+
+  end;
+end;
+
+end.

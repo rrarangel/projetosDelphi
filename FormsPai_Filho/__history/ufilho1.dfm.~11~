@@ -1,0 +1,37 @@
+object fFilho1: TfFilho1
+  Left = 0
+  Top = 0
+  Anchors = [akRight, akBottom]
+  BorderStyle = bsToolWindow
+  Caption = 'Form filho 1'
+  ClientHeight = 323
+  ClientWidth = 422
+  Color = clBtnFace
+  TransparentColor = True
+  DragKind = dkDock
+  DragMode = dmAutomatic
+  Font.Charset = DEFAULT_CHARSET
+  Font.Color = clWindowText
+  Font.Height = -11
+  Font.Name = 'Tahoma'
+  Font.Style = []
+  FormStyle = fsMDIChild
+  OldCreateOrder = False
+  Visible = True
+  OnClose = FormClose
+  OnCreate = FormCreate
+  PixelsPerInch = 96
+  TextHeight = 13
+  object btn1: TBitBtn
+    Left = 339
+    Top = 290
+    Width = 75
+    Height = 25
+    Caption = '&Fechar'
+    DoubleBuffered = True
+    Kind = bkClose
+    ParentDoubleBuffered = False
+    TabOrder = 0
+    OnClick = btn1Click
+  end
+end

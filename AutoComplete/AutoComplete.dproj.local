@@ -1,0 +1,8 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<BorlandProject>
+	<Transactions>
+    <Transaction>2017/05/10 11:41:09.334.pas,C:\Users\rodrigorangel\Documents\RAD Studio\Projects\Unit1.pas=C:\Users\rodrigorangel\Desktop\Arquivos\Projetos Delphi\AutoComplete\uAutoComplete.pas</Transaction>
+    <Transaction>2017/05/10 11:41:09.334.dfm,C:\Users\rodrigorangel\Documents\RAD Studio\Projects\Unit1.dfm=C:\Users\rodrigorangel\Desktop\Arquivos\Projetos Delphi\AutoComplete\uAutoComplete.dfm</Transaction>
+    <Transaction>2017/05/10 11:41:13.818.dproj,C:\Users\rodrigorangel\Documents\RAD Studio\Projects\Project1.dproj=C:\Users\rodrigorangel\Desktop\Arquivos\Projetos Delphi\AutoComplete\AutoComplete.dproj</Transaction>
+  </Transactions>
+</BorlandProject>

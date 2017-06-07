@@ -1,0 +1,30 @@
+unit ufilho1;
+
+interface
+
+uses
+  Windows, Messages, SysUtils, Variants, Classes, Graphics, Controls, Forms,
+  Dialogs;
+
+type
+  TfFilho1 = class(TForm)
+    procedure FormClose(Sender: TObject; var Action: TCloseAction);
+  private
+    { Private declarations }
+  public
+    { Public declarations }
+  end;
+
+var
+  fFilho1: TfFilho1;
+
+implementation
+
+{$R *.dfm}
+
+procedure TfFilho1.FormClose(Sender: TObject; var Action: TCloseAction);
+begin
+ FreeAndNil(Self);
+end;
+
+end.

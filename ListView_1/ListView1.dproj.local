@@ -1,0 +1,8 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<BorlandProject>
+	<Transactions>
+    <Transaction>2017/05/02 17:40:48.611.pas,C:\Users\rodrigorangel\Documents\RAD Studio\Projects\Unit1.pas=C:\Users\rodrigorangel\Desktop\Arquivos\Projetos Delphi\ListView_1\uListView1.pas</Transaction>
+    <Transaction>2017/05/02 17:40:48.611.dfm,C:\Users\rodrigorangel\Documents\RAD Studio\Projects\Unit1.dfm=C:\Users\rodrigorangel\Desktop\Arquivos\Projetos Delphi\ListView_1\uListView1.dfm</Transaction>
+    <Transaction>2017/05/02 17:40:53.201.dproj,C:\Users\rodrigorangel\Documents\RAD Studio\Projects\Project1.dproj=C:\Users\rodrigorangel\Desktop\Arquivos\Projetos Delphi\ListView_1\ListView1.dproj</Transaction>
+  </Transactions>
+</BorlandProject>

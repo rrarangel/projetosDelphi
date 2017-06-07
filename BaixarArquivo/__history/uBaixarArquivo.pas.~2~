@@ -1,0 +1,62 @@
+unit uBaixarArquivo;
+
+interface
+
+uses
+  Windows, Messages, SysUtils, Variants, Classes, Graphics, Controls, Forms,
+  Dialogs, StdCtrls, Buttons, ComCtrls, IdAntiFreezeBase, IdAntiFreeze,
+  IdBaseComponent, IdComponent, IdTCPConnection, IdTCPClient, IdHTTP;
+
+type
+  TForm1 = class(TForm)
+    IdHTTP1: TIdHTTP;
+    IdAntiFreeze1: TIdAntiFreeze;
+    pb1: TProgressBar;
+    dlgSave1: TSaveDialog;
+    btn1: TBitBtn;
+    procedure btn1Click(Sender: TObject);
+    procedure IdHTTP1WorkBegin(ASender: TObject; AWorkMode: TWorkMode;
+      AWorkCountMax: Int64);
+  private
+    { Private declarations }
+  public
+    { Public declarations }
+  end;
+
+var
+  Form1: TForm1;
+
+implementation
+
+{$R *.dfm}
+
+function retornaPorcentagem(valorTotal, valorAtual : Real):String;
+var
+resultado : Real;
+begin
+ resultado := ((valorAtual * 100) / valorTotal);
+ Result := FormatFloat('0%', resultado);
+end;
+
+function retornaKBytes(valorAtual : Real): string;
+var
+resultado : Real;
+begin
+  resultado := ((valorAtual / 1024) / 1024);
+  Result := FormatFloat('0.000 Kbs', resultado);
+
+
+end;
+
+procedure TForm1.btn1Click(Sender: TObject);
+begin
+  IdHTTP1.Disconnect();
+end;
+
+procedure TForm1.IdHTTP1WorkBegin(ASender: TObject; AWorkMode: TWorkMode;
+  AWorkCountMax: Int64);
+begin
+    pb1.Max := AWorkCountMax;
+end;
+
+end.

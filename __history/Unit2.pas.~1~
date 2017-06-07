@@ -1,0 +1,25 @@
+unit Unit2;
+
+interface
+
+uses
+  Windows, Messages, SysUtils, Variants, Classes, Graphics, Controls, Forms,
+  Dialogs;
+
+type
+  TMyHint  = class(THintWindow)
+  private
+    { Private declarations }
+  public
+    { Public declarations }
+    procedure doActivateHint(Sender : TObject);
+  end;
+
+var
+  myHint: TMyHint;
+
+implementation
+
+{$R *.dfm}
+
+end.

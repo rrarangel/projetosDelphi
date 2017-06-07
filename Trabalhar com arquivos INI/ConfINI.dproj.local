@@ -1,0 +1,8 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<BorlandProject>
+	<Transactions>
+    <Transaction>2017/03/13 11:22:10.980.pas,C:\Users\rodrigorangel\Documents\RAD Studio\Projects\Unit1.pas=C:\Users\rodrigorangel\Desktop\Arquivos\Trabalhar com arquivos INI\uConfINI.pas</Transaction>
+    <Transaction>2017/03/13 11:22:10.980.dfm,C:\Users\rodrigorangel\Documents\RAD Studio\Projects\Unit1.dfm=C:\Users\rodrigorangel\Desktop\Arquivos\Trabalhar com arquivos INI\uConfINI.dfm</Transaction>
+    <Transaction>2017/03/13 11:22:16.581.dproj,C:\Users\rodrigorangel\Documents\RAD Studio\Projects\Project1.dproj=C:\Users\rodrigorangel\Desktop\Arquivos\Trabalhar com arquivos INI\ConfINI.dproj</Transaction>
+  </Transactions>
+</BorlandProject>

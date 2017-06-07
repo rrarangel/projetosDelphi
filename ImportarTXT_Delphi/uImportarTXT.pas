@@ -1,0 +1,243 @@
+unit uImportarTXT;
+
+interface
+
+uses
+  Windows, Messages, SysUtils, Variants, Classes, Graphics, Controls, Forms,
+  Dialogs, Grids, DBGrids, StdCtrls, DB, DBClient, ADODB, sStrings;
+
+type
+  TForm1 = class(TForm)
+    cds1: TClientDataSet;
+    Button1: TButton;
+    DBGrid1: TDBGrid;
+    DataSource1: TDataSource;
+    cds1Nome: TStringField;
+    cds1RG: TStringField;
+    cds1UF: TStringField;
+    cds1CPF: TStringField;
+    cds1Mae: TStringField;
+    cds1Nascimento: TStringField;
+    cds1Habilitacao: TStringField;
+    cds1Registro: TStringField;
+    cds1Validade: TStringField;
+    cds1Categoria: TStringField;
+    cds1Status: TStringField;
+    cds1Estudo: TStringField;
+    cds1Bloqueado: TStringField;
+    Sp1: TADOStoredProc;
+    ADOConnection1: TADOConnection;
+    Label1: TLabel;
+    OpenDialog1: TOpenDialog;
+    Button2: TButton;
+    Edit1: TEdit;
+    procedure Button2Click(Sender: TObject);
+    procedure importarv1();
+    procedure importarArquivoV2();
+    procedure Button1Click(Sender: TObject);
+  private
+    { Private declarations }
+  public
+    { Public declarations }
+
+
+
+  end;
+
+var
+  Form1: TForm1;
+
+implementation
+
+{$R *.dfm}
+
+var
+
+    Arquivo     : TextFile;
+    Contador, I : Integer;
+    Linha       : String;
+
+function MontaValor : String;
+ var
+ valorMontado : String;
+ begin
+
+  valorMontado := '';
+  Inc(I);
+
+
+  while (Linha[I] >= '') do
+   begin
+
+   if Linha[I] = ';' then
+      Break;
+
+      valorMontado := valorMontado + Linha[I];
+      Inc(I);
+   end;
+
+
+
+   Result := valorMontado;
+
+ end;
+
+
+procedure TForm1.Button1Click(Sender: TObject);
+begin
+    if Edit1.Text = '' then
+     begin
+       ShowMessage('Favor selecionar o arquivo!');
+       Abort;
+     end;
+
+    importarArquivoV2();
+end;
+
+procedure TForm1.Button2Click(Sender: TObject);
+begin
+  if OpenDialog1.Execute() then
+  Edit1.Text := OpenDialog1.FileName;
+end;
+
+procedure TForm1.importarArquivoV2;
+var
+dataFile : TextFile;
+lineFile : String;
+fileStrings : TStrings;
+begin
+
+   AssignFile(dataFile, Edit1.Text);
+   Reset(dataFile);
+
+   fileStrings := TStringList.Create;
+
+    cds1.CreateDataSet;
+    cds1.Open;
+
+    Contador := 0;
+
+   while (not eof(dataFile)) do
+    begin
+
+         Readln(dataFile, lineFile);
+         ExtractStrings([';'],[' '],PChar(lineFile),fileStrings);
+
+
+         cds1.Append;
+
+          cds1Nome.AsString := fileStrings[0];
+          cds1RG.AsString := fileStrings[1];
+          cds1UF.AsString := fileStrings[2];
+          cds1CPF.AsString := fileStrings[3];
+          cds1Mae.AsString := fileStrings[4];
+          cds1Nascimento.AsString := fileStrings[5];
+          cds1Habilitacao.AsString := fileStrings[6];
+          cds1Registro.AsString := fileStrings[7];
+          cds1Validade.AsString := fileStrings[8];
+          cds1Categoria.AsString := fileStrings[9];
+          cds1Status.AsString := fileStrings[10];
+          cds1Estudo.AsString := fileStrings[11];
+          cds1Bloqueado.AsString := fileStrings[12];
+
+          cds1.Post;
+
+          Contador := Contador + 1;
+          fileStrings.Clear;
+
+          label1.Caption := '';
+          label1.Caption := 'Total de Registros processados : ' + IntToStr(Contador);
+          Application.ProcessMessages();
+
+
+
+
+
+
+    end;
+
+
+
+end;
+
+procedure TForm1.importarv1;
+begin
+
+ AssignFile(Arquivo, 'C:\SQL\testeSQL2.txt');
+  Reset(Arquivo);
+
+
+
+  try
+
+    Readln(Arquivo,Linha);
+    Contador := 0;
+
+    cds1.CreateDataSet;
+    cds1.Open;
+
+    Cursor := crHourGlass;
+
+    while not Eoln(Arquivo) do
+    begin
+
+
+      cds1.Append;
+
+      cds1Nome.AsString := MontaValor;
+      cds1RG.AsString := MontaValor;
+      cds1UF.AsString := MontaValor;
+      cds1CPF.AsString := MontaValor;
+      cds1Mae.AsString := MontaValor;
+      cds1Nascimento.AsString := MontaValor;
+      cds1Habilitacao.AsString := MontaValor;
+      cds1Registro.AsString := MontaValor;
+      cds1Validade.AsString := MontaValor;
+      cds1Categoria.AsString := MontaValor;
+      cds1Status.AsString := MontaValor;
+      cds1Estudo.AsString := MontaValor;
+      cds1Bloqueado.AsString := MontaValor;
+
+      cds1.Post;
+
+       {
+        Sp1.Close;
+        Sp1.ProcedureName := 'Stb_Renach_Inserir';
+        Sp1.Parameters.Refresh;
+        Sp1.Parameters.ParamByName('@nome').Value :=    cds1Nome.AsString;
+        Sp1.Parameters.ParamByName('@RG').Value :=      cds1RG.AsString;
+        Sp1.Parameters.ParamByName('@UF').Value :=      cds1UF.AsString;
+        Sp1.Parameters.ParamByName('@CPF').Value :=     cds1CPF.AsString;
+        Sp1.Parameters.ParamByName('@mae').Value :=     cds1Mae.AsString;
+        Sp1.Parameters.ParamByName('@nascimento').Value := cds1Nascimento.AsString;
+        Sp1.Parameters.ParamByName('@habilitacao').Value := cds1Habilitacao.AsString;
+        Sp1.Parameters.ParamByName('@registro').Value := cds1Registro.AsString;
+        Sp1.Parameters.ParamByName('@validade').Value := cds1Validade.AsString;
+        Sp1.Parameters.ParamByName('@categoria').Value := cds1Categoria.AsString;
+        Sp1.Parameters.ParamByName('@status').Value := cds1Status.AsString;
+        Sp1.Parameters.ParamByName('@estudo').Value := cds1Estudo.AsString;
+        Sp1.Parameters.ParamByName('@bloqueado').Value := cds1Bloqueado;
+        Sp1.ExecProc;
+        }
+      Contador := Contador + 1;
+
+      label1.Caption := '';
+      label1.Caption := 'Total de Registros processados : ' + IntToStr(Contador);
+      Application.ProcessMessages;
+
+      Readln(Arquivo,Linha);
+    end;
+
+  finally
+
+     CloseFile(Arquivo);
+     Cursor := crDefault;
+
+  end;
+
+
+
+
+end;
+
+end.

@@ -1,0 +1,86 @@
+unit uAutoComplete;
+
+interface
+
+uses
+  Windows, Messages, SysUtils, Variants, Classes, Graphics, Controls, Forms,
+  Dialogs, DB, ADODB, StdCtrls, DBCtrls;
+
+type
+  TForm1 = class(TForm)
+    edt1: TEdit;
+    con1: TADOConnection;
+    sp1: TADOStoredProc;
+    ds1: TDataSource;
+    lst1: TListBox;
+    edt2: TEdit;
+    procedure edt1Change(Sender: TObject);
+    procedure lst1Click(Sender: TObject);
+    procedure lst1KeyDown(Sender: TObject; var Key: Word; Shift: TShiftState);
+  private
+    { Private declarations }
+  public
+    { Public declarations }
+  end;
+
+var
+  Form1: TForm1;
+
+implementation
+
+{$R *.dfm}
+
+procedure TForm1.edt1Change(Sender: TObject);
+begin
+
+  if edt1.Text = '' then
+   begin
+     lst1.Clear;
+     lst1.Visible := false;
+     Exit();
+   end;
+
+   sp1.Close;
+   sp1.ProcedureName := 'stb_usuarios_LocAutoComplete';
+   sp1.Parameters.Refresh;
+   sp1.Parameters.ParamByName('@nome').Value := edt1.Text;
+   sp1.Open;
+
+   lst1.Visible := true;
+   lst1.Clear;
+   while (not sp1.eof) do
+    begin
+
+       lst1.Items.Add(sp1.FieldByName('Usu_Nome').AsString);
+
+
+     sp1.Next();
+    end;
+
+    edt2.Clear;
+    edt2.Text := sp1.FieldByName('Usu_cod').AsString;
+
+end;
+
+procedure TForm1.lst1Click(Sender: TObject);
+begin
+  edt1.Text := lst1.Items[lst1.ItemIndex];
+  lst1.Clear;
+  lst1.Visible := false;
+end;
+
+procedure TForm1.lst1KeyDown(Sender: TObject; var Key: Word;
+  Shift: TShiftState);
+begin
+  if (key = VK_RETURN) then
+   begin
+    edt1.Text := lst1.Items[lst1.ItemIndex];
+    lst1.Clear;
+    lst1.Visible := false;
+   end
+   else
+   Exit;
+
+end;
+
+end.

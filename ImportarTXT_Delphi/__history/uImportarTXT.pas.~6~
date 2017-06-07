@@ -1,0 +1,113 @@
+unit uImportarTXT;
+
+interface
+
+uses
+  Windows, Messages, SysUtils, Variants, Classes, Graphics, Controls, Forms,
+  Dialogs, Grids, DBGrids, StdCtrls, DB, DBClient;
+
+type
+  TForm1 = class(TForm)
+    cds1: TClientDataSet;
+    Button1: TButton;
+    DBGrid1: TDBGrid;
+    cds1Item1: TStringField;
+    cds1Item2: TStringField;
+    cds1Item3: TStringField;
+    cds1Item4: TStringField;
+    DataSource1: TDataSource;
+    procedure Button1Click(Sender: TObject);
+  private
+    { Private declarations }
+  public
+    { Public declarations }
+
+
+
+  end;
+
+var
+  Form1: TForm1;
+
+implementation
+
+{$R *.dfm}
+
+var
+
+    Arquivo     : TextFile;
+    Contador, I : Integer;
+    Linha       : String;
+
+function MontaValor : String;
+ var
+ valorMontado : String;
+ begin
+
+  valorMontado := '';
+  Inc(I);
+
+  while Linha[I] >= ' ' do
+   begin
+     if Linha[I] = ';' then
+      Break;
+
+     valorMontado := valorMontado + Linha[I];
+     Inc(I);
+
+   end;
+
+   Result := valorMontado;
+
+ end;
+
+
+procedure TForm1.Button1Click(Sender: TObject);
+begin
+
+
+  AssignFile(Arquivo, 'C:\SQL\ArquivoImportar.txt');
+  Reset(Arquivo);
+
+
+
+  try
+
+    Readln(Arquivo,Linha);
+    Contador := 1;
+
+    cds1.CreateDataSet;
+    cds1.Open;
+
+    while not Eoln(Arquivo) do
+    begin
+
+      I:= 0;
+
+
+      cds1.Append;
+      cds1Item1.AsString := MontaValor;
+      cds1Item2.AsString := MontaValor;
+      cds1Item3.AsString := MontaValor;
+      cds1Item4.AsString := MontaValor;
+      cds1.Post;
+
+
+      Readln(Arquivo,Linha);
+    end;
+
+  finally
+
+     CloseFile(Arquivo);
+
+
+  end;
+
+
+
+
+
+
+end;
+
+end.

@@ -1,0 +1,11 @@
+{Gera o gráfico MOF e destaca a mistura} 
+   Series1.Clear; 
+   DataModule1.ADOTable1.First; 
+   while not (DataModule1.ADOTable1.Eof) do 
+   begin 
+     if DataModule1.ADOTable1Carvao.Value = 'Mistura' 
+     then Series1.AddXY(DataModule1.ADOTable1Reflec.Value, DataModule1.ADOTable1Fluidez.Value, '', clRed) 
+     else Series1.AddXY(DataModule1.ADOTable1Reflec.Value, DataModule1.ADOTable1Fluidez.Value, '', clBlue); 
+     DataModule1.ADOTable1.Next; 
+   end; 
+   DataModule1.ADOTable1.First; 

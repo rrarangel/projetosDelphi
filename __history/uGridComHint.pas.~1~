@@ -1,0 +1,57 @@
+unit uGridComHint;
+
+interface
+
+uses
+  Windows, Messages, SysUtils, Variants, Classes, Graphics, Controls, Forms,
+  Dialogs, Grids, DBGrids, DB, ADODB;
+
+type
+  TForm1 = class(TForm)
+    DBGrid1: TDBGrid;
+    DataSource1: TDataSource;
+    ADOConnection1: TADOConnection;
+    Sp: TADOStoredProc;
+    procedure DBGrid1MouseMove(Sender: TObject; Shift: TShiftState; X,
+      Y: Integer);
+    procedure FormShow(Sender: TObject);
+  private
+    { Private declarations }
+  public
+    { Public declarations }
+  end;
+
+var
+  Form1: TForm1;
+
+implementation
+
+{$R *.dfm}
+
+procedure TForm1.DBGrid1MouseMove(Sender: TObject; Shift: TShiftState; X,
+  Y: Integer);
+begin
+if (DBGrid1.MouseCoord(X, Y).X in [2]) and (DBGrid1.MouseCoord(X, Y).Y in [5]) then
+begin
+     DBGrid1.ShowHint := True;
+     DBGrid1.Hint := 'Hint de Teste';
+end
+else
+begin
+     DBGrid1.ShowHint := False;
+end;
+end;
+
+procedure TForm1.FormShow(Sender: TObject);
+begin
+
+   Sp.Close;
+   Sp.ProcedureName := 'Sre_AtivacaoGuincho';
+   Sp.Parameters.Refresh;
+   Sp.Parameters.ParamByName('@DataInicial').Value := '01/02/2017';
+   Sp.Parameters.ParamByName('@DataFinal').Value := '01/02/2017';
+   Sp.Open;
+
+end;
+
+end.

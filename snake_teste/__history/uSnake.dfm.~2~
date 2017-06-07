@@ -1,0 +1,36 @@
+object Form1: TForm1
+  Left = 0
+  Top = 0
+  Caption = 'Form1'
+  ClientHeight = 240
+  ClientWidth = 496
+  Color = clBtnFace
+  Font.Charset = DEFAULT_CHARSET
+  Font.Color = clWindowText
+  Font.Height = -11
+  Font.Name = 'Tahoma'
+  Font.Style = []
+  KeyPreview = True
+  OldCreateOrder = False
+  OnKeyDown = FormKeyDown
+  PixelsPerInch = 96
+  TextHeight = 13
+  object shp1: TShape
+    Left = 232
+    Top = 96
+    Width = 9
+    Height = 9
+  end
+  object shp2: TShape
+    Left = 64
+    Top = 112
+    Width = 9
+    Height = 9
+  end
+  object tmr1: TTimer
+    Interval = 100
+    OnTimer = tmr1Timer
+    Left = 448
+    Top = 184
+  end
+end

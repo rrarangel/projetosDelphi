@@ -1,0 +1,24 @@
+unit ufilho1;
+
+interface
+
+uses
+  Windows, Messages, SysUtils, Variants, Classes, Graphics, Controls, Forms,
+  Dialogs;
+
+type
+  TfFilho1 = class(TForm)
+  private
+    { Private declarations }
+  public
+    { Public declarations }
+  end;
+
+var
+  fFilho1: TfFilho1;
+
+implementation
+
+{$R *.dfm}
+
+end.

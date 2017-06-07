@@ -1,0 +1,53 @@
+object Form1: TForm1
+  Left = 0
+  Top = 0
+  Caption = 'Form1'
+  ClientHeight = 258
+  ClientWidth = 666
+  Color = clBtnFace
+  Font.Charset = DEFAULT_CHARSET
+  Font.Color = clWindowText
+  Font.Height = -11
+  Font.Name = 'Tahoma'
+  Font.Style = []
+  OldCreateOrder = False
+  PixelsPerInch = 96
+  TextHeight = 13
+  object frxReport1: TfrxReport
+    Version = '5.1.9'
+    DotMatrixReport = False
+    IniFile = '\Software\Fast Reports'
+    PreviewOptions.Buttons = [pbPrint, pbLoad, pbSave, pbExport, pbZoom, pbFind, pbOutline, pbPageSetup, pbTools, pbEdit, pbNavigator, pbExportQuick]
+    PreviewOptions.Zoom = 1.000000000000000000
+    PrintOptions.Printer = 'Default'
+    PrintOptions.PrintOnSheet = 0
+    ReportOptions.CreateDate = 42866.627535324070000000
+    ReportOptions.LastChange = 42866.627535324070000000
+    ScriptLanguage = 'PascalScript'
+    ScriptText.Strings = (
+      'begin'
+      ''
+      'end.')
+    Left = 32
+    Top = 24
+    Datasets = <>
+    Variables = <>
+    Style = <>
+  end
+  object con1: TADOConnection
+    ConnectionString = 
+      'Provider=SQLOLEDB.1;Password=237recursos2211;Persist Security In' +
+      'fo=True;User ID=sa;Initial Catalog=Recursos_CIOTT;Data Source=gr' +
+      '003v,1433'
+    LoginPrompt = False
+    Provider = 'SQLOLEDB.1'
+    Left = 448
+    Top = 208
+  end
+  object sp1: TADOStoredProc
+    Connection = con1
+    Parameters = <>
+    Left = 488
+    Top = 208
+  end
+end

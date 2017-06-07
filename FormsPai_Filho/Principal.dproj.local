@@ -1,0 +1,10 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<BorlandProject>
+	<Transactions>
+    <Transaction>2017/05/22 10:28:00.157.pas,C:\Users\rodrigorangel\Documents\RAD Studio\Projects\Unit1.pas=C:\Users\rodrigorangel\Desktop\Arquivos\Projetos Delphi\FormsPai_Filho\uPrincipal.pas</Transaction>
+    <Transaction>2017/05/22 10:28:00.157.dfm,C:\Users\rodrigorangel\Documents\RAD Studio\Projects\Unit1.dfm=C:\Users\rodrigorangel\Desktop\Arquivos\Projetos Delphi\FormsPai_Filho\uPrincipal.dfm</Transaction>
+    <Transaction>2017/05/22 10:28:07.528.dproj,C:\Users\rodrigorangel\Documents\RAD Studio\Projects\Project1.dproj=C:\Users\rodrigorangel\Desktop\Arquivos\Projetos Delphi\FormsPai_Filho\Principal.dproj</Transaction>
+    <Transaction>2017/05/22 10:29:08.073.pas,C:\Users\rodrigorangel\Desktop\Arquivos\Projetos Delphi\FormsPai_Filho\Unit2.pas=C:\Users\rodrigorangel\Desktop\Arquivos\Projetos Delphi\FormsPai_Filho\ufilho1.pas</Transaction>
+    <Transaction>2017/05/22 10:29:08.073.dfm,C:\Users\rodrigorangel\Desktop\Arquivos\Projetos Delphi\FormsPai_Filho\Unit2.dfm=C:\Users\rodrigorangel\Desktop\Arquivos\Projetos Delphi\FormsPai_Filho\ufilho1.dfm</Transaction>
+  </Transactions>
+</BorlandProject>

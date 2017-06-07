@@ -1,0 +1,38 @@
+object fPrincipal: TfPrincipal
+  Left = 0
+  Top = 0
+  Caption = 'Form Pai'
+  ClientHeight = 521
+  ClientWidth = 943
+  Color = clBtnFace
+  Font.Charset = DEFAULT_CHARSET
+  Font.Color = clWindowText
+  Font.Height = -11
+  Font.Name = 'Tahoma'
+  Font.Style = []
+  FormStyle = fsMDIForm
+  Menu = mm1
+  OldCreateOrder = False
+  WindowState = wsMaximized
+  PixelsPerInch = 96
+  TextHeight = 13
+  object btn1: TButton
+    Left = 860
+    Top = 344
+    Width = 75
+    Height = 25
+    Caption = 'Iniciar'
+    TabOrder = 0
+    OnClick = btn1Click
+  end
+  object mm1: TMainMenu
+    Left = 832
+    Top = 344
+    object Arquivo1: TMenuItem
+      Caption = 'Arquivo'
+      object Sair1: TMenuItem
+        Caption = 'Sair'
+      end
+    end
+  end
+end

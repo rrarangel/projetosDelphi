@@ -1,0 +1,28 @@
+unit uFastReport;
+
+interface
+
+uses
+  Windows, Messages, SysUtils, Variants, Classes, Graphics, Controls, Forms,
+  Dialogs, DB, ADODB, frxClass, frxDBSet;
+
+type
+  TForm1 = class(TForm)
+    frxReport1: TfrxReport;
+    con1: TADOConnection;
+    sp1: TADOStoredProc;
+    frxDBDataset1: TfrxDBDataset;
+  private
+    { Private declarations }
+  public
+    { Public declarations }
+  end;
+
+var
+  Form1: TForm1;
+
+implementation
+
+{$R *.dfm}
+
+end.

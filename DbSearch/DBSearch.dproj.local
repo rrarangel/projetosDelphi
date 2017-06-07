@@ -1,0 +1,8 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<BorlandProject>
+	<Transactions>
+    <Transaction>2017/05/24 11:00:49.668.pas,C:\Users\rodrigorangel\Documents\RAD Studio\Projects\Unit1.pas=C:\Users\rodrigorangel\Desktop\Arquivos\Projetos Delphi\DbSearch\uDBSearch.pas</Transaction>
+    <Transaction>2017/05/24 11:00:49.668.dfm,C:\Users\rodrigorangel\Documents\RAD Studio\Projects\Unit1.dfm=C:\Users\rodrigorangel\Desktop\Arquivos\Projetos Delphi\DbSearch\uDBSearch.dfm</Transaction>
+    <Transaction>2017/05/24 11:00:54.153.dproj,C:\Users\rodrigorangel\Documents\RAD Studio\Projects\Project1.dproj=C:\Users\rodrigorangel\Desktop\Arquivos\Projetos Delphi\DbSearch\DBSearch.dproj</Transaction>
+  </Transactions>
+</BorlandProject>

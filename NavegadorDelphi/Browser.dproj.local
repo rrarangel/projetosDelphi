@@ -1,0 +1,8 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<BorlandProject>
+	<Transactions>
+    <Transaction>2017/03/14 15:55:04.666.pas,C:\Users\rodrigorangel\Documents\RAD Studio\Projects\Unit1.pas=C:\Users\rodrigorangel\Desktop\Arquivos\NavegadorDelphi\uBrowser.pas</Transaction>
+    <Transaction>2017/03/14 15:55:04.666.dfm,C:\Users\rodrigorangel\Documents\RAD Studio\Projects\Unit1.dfm=C:\Users\rodrigorangel\Desktop\Arquivos\NavegadorDelphi\uBrowser.dfm</Transaction>
+    <Transaction>2017/03/14 15:55:09.769.dproj,C:\Users\rodrigorangel\Documents\RAD Studio\Projects\Project1.dproj=C:\Users\rodrigorangel\Desktop\Arquivos\NavegadorDelphi\Browser.dproj</Transaction>
+  </Transactions>
+</BorlandProject>

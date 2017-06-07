@@ -1,0 +1,8 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<BorlandProject>
+	<Transactions>
+    <Transaction>2017/05/08 15:03:33.294.pas,C:\Users\rodrigorangel\Documents\RAD Studio\Projects\Unit1.pas=C:\Users\rodrigorangel\Desktop\Arquivos\Projetos Delphi\BaixarArquivo\uBaixarArquivo.pas</Transaction>
+    <Transaction>2017/05/08 15:03:33.294.dfm,C:\Users\rodrigorangel\Documents\RAD Studio\Projects\Unit1.dfm=C:\Users\rodrigorangel\Desktop\Arquivos\Projetos Delphi\BaixarArquivo\uBaixarArquivo.dfm</Transaction>
+    <Transaction>2017/05/08 15:03:39.888.dproj,C:\Users\rodrigorangel\Documents\RAD Studio\Projects\Project1.dproj=C:\Users\rodrigorangel\Desktop\Arquivos\Projetos Delphi\BaixarArquivo\BaixarArquivo.dproj</Transaction>
+  </Transactions>
+</BorlandProject>

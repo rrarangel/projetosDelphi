@@ -1,0 +1,47 @@
+unit uWebService_Correios;
+
+interface
+
+uses
+  Windows, Messages, SysUtils, Variants, Classes, Graphics, Controls, Forms,
+  Dialogs, InvokeRegistry, StdCtrls, Rio, SOAPHTTPClient;
+
+type
+  TForm1 = class(TForm)
+    HTTPRIO1: THTTPRIO;
+    Edit1: TEdit;
+    Memo1: TMemo;
+    procedure Edit1KeyDown(Sender: TObject; var Key: Word; Shift: TShiftState);
+  private
+    { Private declarations }
+  public
+    { Public declarations }
+  end;
+
+var
+  Form1: TForm1;
+
+implementation
+
+uses
+  CEP;
+
+{$R *.dfm}
+
+procedure TForm1.Edit1KeyDown(Sender: TObject; var Key: Word;
+  Shift: TShiftState);
+var
+ObjSoap : CEPServicePort;
+num     : String;
+begin
+    if key = VK_RETURN then
+     begin
+
+        ObjSoap := (HTTPRIO1 as CEPServicePort);
+        num := Edit1.Text;
+        Memo1.Lines.Add(ObjSoap.obterLogradouro(num));
+
+     end;
+end;
+
+end.

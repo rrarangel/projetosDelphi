@@ -1,0 +1,122 @@
+object Form1: TForm1
+  Left = 0
+  Top = 0
+  Caption = 'Form1'
+  ClientHeight = 422
+  ClientWidth = 910
+  Color = clBtnFace
+  Font.Charset = DEFAULT_CHARSET
+  Font.Color = clWindowText
+  Font.Height = -11
+  Font.Name = 'Tahoma'
+  Font.Style = []
+  OldCreateOrder = False
+  PixelsPerInch = 96
+  TextHeight = 13
+  object Label1: TLabel
+    Left = 8
+    Top = 264
+    Width = 31
+    Height = 13
+    Caption = 'Label1'
+  end
+  object Button1: TButton
+    Left = 240
+    Top = 239
+    Width = 465
+    Height = 50
+    Caption = 'Importar...'
+    TabOrder = 0
+    OnClick = Button1Click
+  end
+  object DBGrid1: TDBGrid
+    Left = 8
+    Top = 8
+    Width = 894
+    Height = 209
+    DataSource = DataSource1
+    TabOrder = 1
+    TitleFont.Charset = DEFAULT_CHARSET
+    TitleFont.Color = clWindowText
+    TitleFont.Height = -11
+    TitleFont.Name = 'Tahoma'
+    TitleFont.Style = []
+  end
+  object cds1: TClientDataSet
+    Aggregates = <>
+    Params = <>
+    Left = 872
+    Top = 320
+    object cds1Nome: TStringField
+      FieldName = 'Nome'
+      Size = 100
+    end
+    object cds1RG: TStringField
+      FieldName = 'RG'
+      Size = 100
+    end
+    object cds1UF: TStringField
+      FieldName = 'UF'
+      Size = 3
+    end
+    object cds1CPF: TStringField
+      FieldName = 'CPF'
+      Size = 15
+    end
+    object cds1Mae: TStringField
+      FieldName = 'Mae'
+      Size = 100
+    end
+    object cds1Nascimento: TStringField
+      FieldName = 'Nascimento'
+      Size = 15
+    end
+    object cds1Habilitacao: TStringField
+      FieldName = 'Habilitacao'
+    end
+    object cds1Registro: TStringField
+      FieldName = 'Registro'
+      Size = 50
+    end
+    object cds1Validade: TStringField
+      FieldName = 'Validade'
+    end
+    object cds1Categoria: TStringField
+      FieldName = 'Categoria'
+      Size = 3
+    end
+    object cds1Status: TStringField
+      FieldName = 'Status'
+      Size = 10
+    end
+    object cds1Estudo: TStringField
+      FieldName = 'Estudo'
+      Size = 5
+    end
+    object cds1Bloqueado: TStringField
+      FieldName = 'Bloqueado'
+      Size = 50
+    end
+  end
+  object DataSource1: TDataSource
+    DataSet = cds1
+    Left = 872
+    Top = 376
+  end
+  object Sp1: TADOStoredProc
+    Connection = ADOConnection1
+    Parameters = <>
+    Left = 800
+    Top = 376
+  end
+  object ADOConnection1: TADOConnection
+    ConnectionString = 
+      'Provider=SQLOLEDB.1;Password=237recursos2211;Persist Security In' +
+      'fo=True;User ID=sa;Initial Catalog=Estudo_NOA;Data Source=gr003v' +
+      ',1433'
+    LoginPrompt = False
+    Provider = 'SQLOLEDB.1'
+    Left = 800
+    Top = 320
+  end
+end

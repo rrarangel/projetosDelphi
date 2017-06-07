@@ -1,0 +1,38 @@
+object Form1: TForm1
+  Left = 0
+  Top = 0
+  Caption = 'Form1'
+  ClientHeight = 290
+  ClientWidth = 759
+  Color = clBtnFace
+  Font.Charset = DEFAULT_CHARSET
+  Font.Color = clWindowText
+  Font.Height = -11
+  Font.Name = 'Tahoma'
+  Font.Style = []
+  OldCreateOrder = False
+  PixelsPerInch = 96
+  TextHeight = 13
+  object edt1: TEdit
+    Left = 64
+    Top = 56
+    Width = 473
+    Height = 21
+    TabOrder = 0
+  end
+  object con1: TADOConnection
+    ConnectionString = 
+      'Provider=SQLOLEDB.1;Password=237recursos2211;Persist Security In' +
+      'fo=True;User ID=sa;Initial Catalog=Recursos_CIOTT;Data Source=gr' +
+      '003v,1433'
+    LoginPrompt = False
+    Provider = 'SQLOLEDB.1'
+    Left = 296
+    Top = 152
+  end
+  object sp1: TADOStoredProc
+    Parameters = <>
+    Left = 408
+    Top = 152
+  end
+end

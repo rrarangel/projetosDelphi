@@ -1,0 +1,16 @@
+program Principal;
+
+uses
+  Forms,
+  uPrincipal in 'uPrincipal.pas' {Form1},
+  ufilho1 in 'ufilho1.pas' {fFilho1};
+
+{$R *.res}
+
+begin
+  Application.Initialize;
+  Application.MainFormOnTaskbar := True;
+  Application.CreateForm(TForm1, Form1);
+  Application.CreateForm(TfFilho1, fFilho1);
+  Application.Run;
+end.
