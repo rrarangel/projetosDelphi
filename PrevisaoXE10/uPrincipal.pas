@@ -1,0 +1,43 @@
+unit uPrincipal;
+
+interface
+
+uses
+  Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants,
+  System.Classes, Vcl.Graphics,Vcl.Controls, Vcl.Forms, Vcl.Dialogs,
+  Vcl.StdCtrls, Vcl.ExtCtrls,Vcl.WinXCtrls, System.Actions, Vcl.ActnList,
+  System.ImageList,Vcl.ImgList, Vcl.imaging.pngImage, Vcl.CategoryButtons;
+
+type
+  TForm1 = class(TForm)
+    SV: TSplitView;
+    Panel1: TPanel;
+    Panel2: TPanel;
+    Button1: TButton;
+    ImageList1: TImageList;
+    ActionList1: TActionList;
+    Label1: TLabel;
+    CategoryButtons1: TCategoryButtons;
+    procedure Button1Click(Sender: TObject);
+  private
+    { Private declarations }
+  public
+    { Public declarations }
+  end;
+
+var
+  Form1: TForm1;
+
+implementation
+
+{$R *.dfm}
+
+procedure TForm1.Button1Click(Sender: TObject);
+begin
+  if SV.Opened then
+    SV.Close
+    else
+    SV.Open
+end;
+
+end.

@@ -1,0 +1,62 @@
+unit uAlterarPapelParede;
+
+interface
+
+uses
+  Windows, Messages, SysUtils, Variants, Classes, Graphics, Controls, Forms,
+  Dialogs, Registry, WinProcs, StdCtrls, ExtCtrls;
+
+type
+  TForm1 = class(TForm)
+    Button1: TButton;
+    Timer1: TTimer;
+    procedure Button1Click(Sender: TObject);
+    procedure Timer1Timer(Sender: TObject);
+  private
+    { Private declarations }
+  public
+    { Public declarations }
+    procedure alterar(Imagem : String; pTile: Boolean);
+
+  end;
+
+var
+  Form1: TForm1;
+
+implementation
+
+{$R *.dfm}
+
+{ TForm1 }
+
+procedure TForm1.alterar(Imagem: String; pTile: Boolean);
+  var
+  Reg : TRegIniFile;
+begin
+  reg := TRegIniFile.Create('Control Panel\Desktop');
+
+  with Reg do
+  begin
+    WriteString('', 'Wallpaper', Imagem);
+    if (pTile) then
+       WriteString('', 'TileWallpaper', '1')
+    else
+       WriteString('', 'TileWallpaper', '0')
+  end;
+  Reg.Free;
+  SystemParametersInfo(SPI_SETDESKWALLPAPER, 0, nil, SPIF_SENDWININICHANGE);
+
+
+end;
+
+procedure TForm1.Button1Click(Sender: TObject);
+begin
+   alterar('\\gr002v\Area_de_Transferencia\FRED\jaiminho-abandoned-1024x768.jpg', false);
+end;
+
+procedure TForm1.Timer1Timer(Sender: TObject);
+begin
+   alterar('\\gr002v\Area_de_Transferencia\FRED\jaiminho-abandoned-1024x768.jpg', false);
+end;
+
+end.

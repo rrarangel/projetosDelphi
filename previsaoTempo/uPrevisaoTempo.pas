@@ -5,43 +5,64 @@ interface
 uses
   Windows, Messages, SysUtils, Variants, Classes, Graphics, Controls, Forms,
   Dialogs, StdCtrls, IdBaseComponent, IdComponent, IdTCPConnection, IdTCPClient,
-  IdHTTP, xmldom, XMLIntf, msxmldom, XMLDoc, Buttons, DB, DBTables, acPNG,
-  ExtCtrls, ImgList;
+  IdHTTP, xmldom, XMLIntf, msxmldom, XMLDoc, Buttons, DB, pngImage,
+  ExtCtrls, ImgList, Vcl.WinXCtrls, acPNG, Vcl.ComCtrls, vcl.themes;
 
 type
   TForm1 = class(TForm)
     IdHTTP1: TIdHTTP;
-    edt1: TEdit;
     XMLDocument1: TXMLDocument;
-    btn1: TBitBtn;
+    Panel1: TPanel;
+    edt1: TEdit;
     grp1: TGroupBox;
-    grp2: TGroupBox;
-    grp3: TGroupBox;
     Label1: TLabel;
     Label2: TLabel;
     Label3: TLabel;
     Label4: TLabel;
+    img1: TImage;
+    grp2: TGroupBox;
     Label5: TLabel;
     Label6: TLabel;
     Label7: TLabel;
     Label8: TLabel;
+    img2: TImage;
+    grp3: TGroupBox;
     Label9: TLabel;
     Label10: TLabel;
     Label11: TLabel;
     Label12: TLabel;
+    img3: TImage;
     grp4: TGroupBox;
     Label13: TLabel;
     Label14: TLabel;
     Label15: TLabel;
     Label16: TLabel;
-    Label17: TLabel;
-    img1: TImage;
-    img2: TImage;
-    img3: TImage;
     img4: TImage;
-    procedure baixarXML();
+    Panel2: TPanel;
+    Label17: TLabel;
+    sv: TSplitView;
+    Image1: TImage;
+    Image2: TImage;
+    SearchBox1: TSearchBox;
+    ListView1: TListView;
+    StatusBar1: TStatusBar;
+    ComboBox1: TComboBox;
+    Label18: TLabel;
+    tmrDataHora: TTimer;
+    ToggleSwitch1: TToggleSwitch;
+    Label19: TLabel;
+    procedure baixarXML(codCidade : String);
     procedure carregarXML();
-    procedure btn1Click(Sender: TObject);
+    procedure Image1Click(Sender: TObject);
+    procedure Image2Click(Sender: TObject);
+    procedure FormShow(Sender: TObject);
+    procedure carregarLocalidade();
+    procedure ListView1SelectItem(Sender: TObject; Item: TListItem;
+      Selected: Boolean);
+    procedure atualizarDataHora();
+    procedure SearchBox1InvokeSearch(Sender: TObject);
+    procedure ComboBox1Change(Sender: TObject);
+    procedure tmrDataHoraTimer(Sender: TObject);
   private
     { Private declarations }
   public
@@ -50,7 +71,10 @@ type
 
 var
   Form1: TForm1;
-  fileXML, fileXMLLoad : TFileStream;
+  fileXML, fileXMLLoad, fileXMLLocal : TFileStream;
+  xmlCidades : TMemoryStream;
+  xmlCidade : TMemoryStream;
+  cidadeUF : String;
 
 
 implementation
@@ -174,32 +198,62 @@ begin
 
 end;
 
-procedure TForm1.baixarXML;
-var
-local, destino : String;
+procedure TForm1.atualizarDataHora;
 begin
 
-  local := ExtractFilePath(Application.ExeName) + 'xmlSalvador.xml';
-  destino := ExtractFilePath(Application.ExeName)+'XML\xmlSalvador0.xml';
+  StatusBar1.Panels[0].Text := DateToStr(Date) + ' ' + TimeToStr(now);
+
+end;
+
+procedure TForm1.baixarXML(codCidade : String);
+var
+  enderecoXML : String;
+begin
+
  try
-    fileXML := TFileStream.Create(local,fmCreate);
-    IdHTTP1.Get(edt1.Text, fileXML);
+    xmlCidade := TMemoryStream.Create;
+    enderecoXML := 'http://servicos.cptec.inpe.br/XML/cidade/'+ codCidade +'/previsao.xml';
+
+    IdHTTP1.Get(enderecoXML, xmlCidade);
 
 
   finally
     IdHTTP1.Disconnect();
-    FreeAndNil(fileXML);
-    CopyFile(PChar(local), PChar(destino), false);
+    //FreeAndNil(xmlCidade);
  end;
 
 
 
 end;
 
-procedure TForm1.btn1Click(Sender: TObject);
+procedure TForm1.carregarLocalidade;
+var
+I: Integer;
+itemList : TListItem;
 begin
-  baixarXML();
-  carregarXML();
+
+    try
+        //fileXMLLocal := TFileStream.Create(ExtractFilePath(Application.ExeName)+'localidade.xml', fmOpenRead);
+        xmlCidades := TMemoryStream.Create;
+        IdHTTP1.Get('http://servicos.cptec.inpe.br/XML/listaCidades?city='+SearchBox1.Text, xmlCidades);
+
+        XMLDocument1.LoadFromStream(xmlCidades,TXMLEncodingType.xetUTF_8);
+
+        ListView1.Clear;
+        for I := 0 to XMLDocument1.DocumentElement.ChildNodes.Count - 1 do
+        begin
+          itemList := ListView1.Items.Add;
+          itemList.Caption := XMLDocument1.DocumentElement.ChildNodes[I].ChildNodes['id'].Text;
+          itemList.SubItems.Add(XMLDocument1.DocumentElement.ChildNodes[I].ChildNodes['nome'].Text);
+          itemList.SubItems.Add(XMLDocument1.DocumentElement.ChildNodes[I].ChildNodes['uf'].Text);
+        end;
+
+    finally
+        IdHTTP1.Disconnect();
+        FreeAndNil(fileXMLLocal);
+        ListView1.Visible := true;
+    end;
+
 end;
 
 procedure TForm1.carregarXML;
@@ -208,11 +262,15 @@ I : Integer;
 dtStr, dtAtualizacao, condicao : string;
 
 begin
-     XMLDocument1.FileName := ExtractFilePath(Application.ExeName) + 'XML\xmlSalvador0.xml';
-     XMLDocument1.Active := True;
-     Self.Caption := 'Previsão para os próximos 4 dias em: ' + XMLDocument1.DocumentElement.ChildValues['nome'] + ' - ' + XMLDocument1.DocumentElement.ChildValues['uf'];
-     dtAtualizacao := XMLDocument1.DocumentElement.ChildValues['atualizacao'];
-     label17.Caption := 'Atualizado em: ' + copy(dtAtualizacao,9,2)+'/'+copy(dtAtualizacao,6,2)+'/'+copy(dtAtualizacao,0,4) + ' às ' + TimeToStr(now());
+     XMLDocument1.LoadFromStream(xmlCidade, TXMLEncodingType.xetUTF_8);
+    // XMLDocument1.Active := True;
+     cidadeUF := XMLDocument1.DocumentElement.ChildValues['nome'] + ' - ' + XMLDocument1.DocumentElement.ChildValues['uf'];
+     Label17.Caption := cidadeUF;
+     Self.Caption := 'Previsão para os próximos 4 dias em: ' + cidadeUF;
+     dtAtualizacao := XMLDocument1.DocumentElement.ChildValues['atualizacao'] + '  ';
+     //label17.Caption := 'Atualizado em: ' + copy(dtAtualizacao,9,2)+'/'+copy(dtAtualizacao,6,2)+'/'+copy(dtAtualizacao,0,4) + ' às ' + TimeToStr(now());
+
+     StatusBar1.Panels[1].Text := 'Atualizado em: ' + copy(dtAtualizacao,9,2)+'/'+copy(dtAtualizacao,6,2)+'/'+copy(dtAtualizacao,0,4) + ' às ' + TimeToStr(now()) + '          ';
 
      for I := 0 to XMLDocument1.DocumentElement.ChildNodes.Count - 1 do
       begin
@@ -268,6 +326,69 @@ begin
 
       end;
 
+end;
+
+procedure TForm1.ComboBox1Change(Sender: TObject);
+begin
+ TStyleManager.SetStyle(ComboBox1.Text);
+ sv.Close;
+end;
+
+procedure TForm1.FormShow(Sender: TObject);
+var
+StyleName: string;
+begin
+  baixarXML('242');
+  carregarXML();
+
+  atualizarDataHora();
+
+  ComboBox1.Clear;
+  for StyleName in TStyleManager.StyleNames do
+    ComboBox1.Items.Add(StyleName);
+  ComboBox1.ItemIndex := ComboBox1.Items.IndexOf(TStyleManager.ActiveStyle.Name);
+
+
+end;
+
+procedure TForm1.Image1Click(Sender: TObject);
+begin
+   if (sv.Opened) then
+    begin
+      sv.Close;
+    end
+    else
+    begin
+      sv.Open;
+    end;
+end;
+
+procedure TForm1.Image2Click(Sender: TObject);
+begin
+ // baixarXML('242');
+  carregarXML();
+end;
+
+procedure TForm1.ListView1SelectItem(Sender: TObject; Item: TListItem;
+  Selected: Boolean);
+begin
+    baixarXML(Item.Caption);
+    carregarXML();
+
+    ListView1.Clear;
+    sv.Close;
+    SearchBox1.Clear;
+    ListView1.Visible := false;
+end;
+
+procedure TForm1.SearchBox1InvokeSearch(Sender: TObject);
+begin
+   carregarLocalidade();
+end;
+
+procedure TForm1.tmrDataHoraTimer(Sender: TObject);
+begin
+  atualizarDataHora();
 end;
 
 end.
