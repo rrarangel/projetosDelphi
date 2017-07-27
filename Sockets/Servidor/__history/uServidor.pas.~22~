@@ -1,0 +1,91 @@
+unit uServidor;
+
+interface
+
+uses
+  Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants, System.Classes, Vcl.Graphics,
+  Vcl.Controls, Vcl.Forms, Vcl.Dialogs, Vcl.StdCtrls, IdBaseComponent,
+  IdComponent, IdCustomTCPServer, IdSocksServer, System.Win.ScktComp;
+
+type
+  TForm1 = class(TForm)
+    Button1: TButton;
+    sServer: TServerSocket;
+    Memo1: TMemo;
+    procedure Button1Click(Sender: TObject);
+    procedure sServerClientRead(Sender: TObject; Socket: TCustomWinSocket);
+    procedure sServerClientWrite(Sender: TObject; Socket: TCustomWinSocket);
+    procedure sServerClientConnect(Sender: TObject; Socket: TCustomWinSocket);
+    procedure sServerClientDisconnect(Sender: TObject;
+      Socket: TCustomWinSocket);
+  private
+    { Private declarations }
+  public
+    { Public declarations }
+  end;
+
+var
+  Form1: TForm1;
+
+implementation
+
+{$R *.dfm}
+
+procedure TForm1.Button1Click(Sender: TObject);
+begin
+
+   if sServer.Active then
+    begin
+      sServer.Active := false;
+      Memo1.Lines.Add('Servidor desligado!');
+    end
+   else
+    begin
+      sServer.Active := true;
+      Memo1.Lines.Add('Servidor iniciado...');
+    end;
+
+end;
+
+procedure TForm1.sServerClientConnect(Sender: TObject;
+  Socket: TCustomWinSocket);
+begin
+   Memo1.Lines.Add('Client '+IntToStr(Socket.SocketHandle)+' conectado!');
+end;
+
+procedure TForm1.sServerClientDisconnect(Sender: TObject;
+  Socket: TCustomWinSocket);
+begin
+  Memo1.Lines.Add('Client '+IntToStr(Socket.SocketHandle)+' desconectado!');
+end;
+
+procedure TForm1.sServerClientRead(Sender: TObject; Socket: TCustomWinSocket);
+var
+  I: LongInt;
+  str: String;
+  hClient : HWND;
+begin
+
+    for I := 0 to sServer.Socket.ActiveConnections - 1 do
+      begin
+        str := Socket.ReceiveText;
+        hClient := sServer.Socket.Connections[I].Handle;
+
+        Memo1.Lines.Add(str);
+
+        sServer.Socket.Connections[I].SendText(str);
+
+      end;
+
+end;
+
+procedure TForm1.sServerClientWrite(Sender: TObject; Socket: TCustomWinSocket);
+var
+  str : String;
+  I: Integer;
+begin
+    //str := Socket.ReceiveText;
+    //Memo1.Lines.Add(str);
+end;
+
+end.

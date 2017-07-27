@@ -1,0 +1,199 @@
+unit uCliente;
+
+interface
+
+uses
+  Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants, System.Classes, Vcl.Graphics,
+  Vcl.Controls, Vcl.Forms, Vcl.Dialogs, Vcl.StdCtrls, Data.DB,
+  Datasnap.DBClient, Datasnap.Win.MConnect, Datasnap.Win.SConnect,
+  System.Win.ScktComp, acPNG, Vcl.ExtCtrls, Vcl.WinXCtrls, System.Notification;
+
+type
+  TForm1 = class(TForm)
+    sClient: TClientSocket;
+    Panel2: TPanel;
+    Memo1: TMemo;
+    Memo2: TMemo;
+    Button3: TButton;
+    Panel1: TPanel;
+    Image1: TImage;
+    sv: TSplitView;
+    Label1: TLabel;
+    Edit1: TEdit;
+    Button1: TButton;
+    Button2: TButton;
+    Edit2: TEdit;
+    Label2: TLabel;
+    Label3: TLabel;
+    sv1: TToggleSwitch;
+    NC: TNotificationCenter;
+    procedure Button1Click(Sender: TObject);
+    procedure FormShow(Sender: TObject);
+    procedure sClientRead(Sender: TObject; Socket: TCustomWinSocket);
+    procedure Button3Click(Sender: TObject);
+    procedure sClientDisconnect(Sender: TObject; Socket: TCustomWinSocket);
+    procedure enviarMSG();
+    procedure Memo2KeyDown(Sender: TObject; var Key: Word; Shift: TShiftState);
+    procedure Image1Click(Sender: TObject);
+    procedure Button2Click(Sender: TObject);
+    procedure sClientConnect(Sender: TObject; Socket: TCustomWinSocket);
+    procedure pNotification();
+  private
+    { Private declarations }
+  public
+    { Public declarations }
+  end;
+
+var
+  Form1: TForm1;
+  usuarioLogado : String;
+  msgRecebida : String;
+  enviaNTF : Boolean;
+
+implementation
+
+{$R *.dfm}
+
+
+function getUsuarioLogado: String;
+var
+  I: DWord;
+  user: string;
+begin
+  I := 255;
+  SetLength(user, I);
+  GetUserName(PChar(user), I);
+  user := string(PChar(user));
+  result := user;
+end;
+
+
+procedure TForm1.Button1Click(Sender: TObject);
+var
+ws : WideString;
+begin
+  sClient.Address := Edit1.Text;
+
+   try
+
+     if sClient.Active then
+   begin
+      sClient.Active := false;
+     // Memo1.Lines.Add('Desconectado do servidor...');
+   end
+   else
+   begin
+
+      sClient.Active := true;
+      //Memo1.Lines.Add(usuarioLogado + ' conectou!');
+
+   end;
+
+   except on E: Exception do
+    ShowMessage('Erro ao conectar ao servidor: ' + e.Message);
+   end;
+
+   sv.Close;
+
+end;
+
+procedure TForm1.Button2Click(Sender: TObject);
+begin
+   usuarioLogado := Edit2.Text;
+      sv.Close;
+end;
+
+procedure TForm1.Button3Click(Sender: TObject);
+begin
+ enviarMSG();
+end;
+
+procedure TForm1.enviarMSG;
+begin
+
+   enviaNTF := false;
+
+  if (Memo2.Text <> '') then
+   begin
+      sClient.Socket.SendText(usuarioLogado + ' -> ' + Memo2.Text);
+      Memo2.Clear;
+      Memo2.SetFocus;
+   end;
+
+
+
+
+end;
+
+procedure TForm1.FormShow(Sender: TObject);
+begin
+    usuarioLogado := getUsuarioLogado;
+    edit2.Text := usuarioLogado;
+    Memo2.SetFocus;
+
+    enviaNTF := false;
+end;
+
+procedure TForm1.Image1Click(Sender: TObject);
+begin
+   if (sv.Opened) then
+   sv.Close
+   else
+    sv.Open;
+
+end;
+
+procedure TForm1.Memo2KeyDown(Sender: TObject; var Key: Word;
+  Shift: TShiftState);
+begin
+
+   if (key = VK_RETURN) and (sv1.State = tssOn) then
+    begin
+      enviarMSG();
+    end;
+
+end;
+
+procedure TForm1.pNotification;
+var
+ntf : TNotification;
+begin
+
+
+ ntf := TNotification.Create;
+ ntf.Title := msgRecebida;
+ ntf.AlertBody := msgRecebida;
+ ntf.Name := 'ntf1';
+ ntf.AlertBody := msgRecebida;
+
+ NC.PresentNotification(ntf);
+
+
+end;
+
+procedure TForm1.sClientConnect(Sender: TObject; Socket: TCustomWinSocket);
+begin
+  sClient.Socket.SendText(usuarioLogado + ' -> ' + ' Chegou!');
+end;
+
+procedure TForm1.sClientDisconnect(Sender: TObject; Socket: TCustomWinSocket);
+begin
+  sClient.Socket.SendText(usuarioLogado + ' -> ' + ' Caiu fora!');
+end;
+
+procedure TForm1.sClientRead(Sender: TObject; Socket: TCustomWinSocket);
+begin
+  Memo1.Lines.Add(' - '+ Sclient.Socket.ReceiveText);
+  msgRecebida := Sclient.Socket.ReceiveText;
+
+
+  if (enviaNTF) then
+   begin
+      pNotification();
+   end;
+
+     enviaNTF := true;
+
+end;
+
+end.

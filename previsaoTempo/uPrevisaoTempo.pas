@@ -6,7 +6,8 @@ uses
   Windows, Messages, SysUtils, Variants, Classes, Graphics, Controls, Forms,
   Dialogs, StdCtrls, IdBaseComponent, IdComponent, IdTCPConnection, IdTCPClient,
   IdHTTP, xmldom, XMLIntf, msxmldom, XMLDoc, Buttons, DB, pngImage,
-  ExtCtrls, ImgList, Vcl.WinXCtrls, acPNG, Vcl.ComCtrls, vcl.themes;
+  ExtCtrls, ImgList, Vcl.WinXCtrls, acPNG, Vcl.ComCtrls, vcl.themes, Vcl.Menus,
+  Vcl.AppEvnts;
 
 type
   TForm1 = class(TForm)
@@ -51,6 +52,12 @@ type
     tmrDataHora: TTimer;
     ToggleSwitch1: TToggleSwitch;
     Label19: TLabel;
+    TrayIcon1: TTrayIcon;
+    PopupMenu1: TPopupMenu;
+    S1: TMenuItem;
+    A1: TMenuItem;
+    A2: TMenuItem;
+    ApplicationEvents1: TApplicationEvents;
     procedure baixarXML(codCidade : String);
     procedure carregarXML();
     procedure Image1Click(Sender: TObject);
@@ -63,6 +70,8 @@ type
     procedure SearchBox1InvokeSearch(Sender: TObject);
     procedure ComboBox1Change(Sender: TObject);
     procedure tmrDataHoraTimer(Sender: TObject);
+    procedure ApplicationEvents1Minimize(Sender: TObject);
+    procedure TrayIcon1DblClick(Sender: TObject);
   private
     { Private declarations }
   public
@@ -196,6 +205,15 @@ begin
 
 
 
+end;
+
+procedure TForm1.ApplicationEvents1Minimize(Sender: TObject);
+begin
+  Self.Hide();
+  Self.WindowState := wsMinimized;
+  TrayIcon1.Visible := True;
+ // TrayIcon1.Animate := True;
+ // TrayIcon1.ShowBalloonHint;
 end;
 
 procedure TForm1.atualizarDataHora;
@@ -389,6 +407,14 @@ end;
 procedure TForm1.tmrDataHoraTimer(Sender: TObject);
 begin
   atualizarDataHora();
+end;
+
+procedure TForm1.TrayIcon1DblClick(Sender: TObject);
+begin
+  TrayIcon1.Visible := False;
+  Self.Show();
+  WindowState := wsNormal;
+  Application.BringToFront();
 end;
 
 end.
